@@ -19,6 +19,8 @@ brew install bogghi/habit-cli/habit-cli
 
 ### Windows — winget
 
+> **Coming soon** — winget submission in progress.
+
 ```powershell
 winget install Bogghi.HabitCli
 ```
