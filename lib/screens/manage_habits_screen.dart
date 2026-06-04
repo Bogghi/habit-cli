@@ -60,11 +60,11 @@ class _ManageHabitsScreenState extends State<ManageHabitsScreen> {
       focused: !_addingNew,
       onKeyEvent: (event) {
         final key = event.logicalKey;
-        if (key == LogicalKey.arrowUp) {
+        if (key == LogicalKey.arrowUp || key == LogicalKey.keyK) {
           _moveFocus(-1);
           return true;
         }
-        if (key == LogicalKey.arrowDown) {
+        if (key == LogicalKey.arrowDown || key == LogicalKey.keyJ) {
           _moveFocus(1);
           return true;
         }
@@ -144,7 +144,7 @@ class _ManageHabitsScreenState extends State<ManageHabitsScreen> {
                     ],
                   )
                 : Text(
-                    '[n] Add new habit   ${_store.habits.isNotEmpty ? '[d] Delete selected' : ''}',
+                    'j/k or ↑↓ navigate   [n] add   ${_store.habits.isNotEmpty ? '[d] delete' : ''}',
                     style: TextStyle(color: Colors.gray),
                   ),
           ),

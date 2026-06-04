@@ -45,11 +45,11 @@ class _LogTodayScreenState extends State<LogTodayScreen> {
       focused: true,
       onKeyEvent: (event) {
         final key = event.logicalKey;
-        if (key == LogicalKey.arrowUp) {
+        if (key == LogicalKey.arrowUp || key == LogicalKey.keyK) {
           _moveFocus(-1);
           return true;
         }
-        if (key == LogicalKey.arrowDown) {
+        if (key == LogicalKey.arrowDown || key == LogicalKey.keyJ) {
           _moveFocus(1);
           return true;
         }
@@ -106,7 +106,7 @@ class _LogTodayScreenState extends State<LogTodayScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 2),
             child: Text(
-              '↑↓ navigate   Space/Enter toggle',
+              'j/k or ↑↓ navigate   Space/Enter toggle',
               style: TextStyle(color: Colors.gray),
             ),
           ),
@@ -130,19 +130,26 @@ class _HabitRow extends StatelessComponent {
 
   @override
   Component build(BuildContext context) {
-    return Container(
-      color: focused ? const Color.fromRGB(50, 50, 60) : null,
-      child: Row(
-        children: [
-          Text(
-            done ? '[x] ' : '[ ] ',
-            style: TextStyle(
-              color: done ? Colors.green : Colors.gray,
-            ),
-          ),
-          Text(name),
-        ],
-      ),
+    return Row(
+      children: [
+        Text(
+          focused ? '> ' : '  ',
+          style: TextStyle(color: Colors.green),
+        ),
+        Text(
+          done ? '[x] ' : '[ ] ',
+          style: TextStyle(color: done ? Colors.green : Colors.gray),
+        ),
+        Text(
+          name,
+          style: focused
+              ? TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                )
+              : null,
+        ),
+      ],
     );
   }
 }
