@@ -1,7 +1,7 @@
 name: habit_cli
-description: A sample command-line application.
+description: A terminal habit tracker with GitHub-style heatmaps.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/Bogghi/habit-cli
 
 environment:
   sdk: ^3.11.3

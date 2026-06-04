@@ -29,12 +29,31 @@ dart compile exe bin/habit_cli.dart -o habit_cli
 
 ## Architecture
 
-This is a Dart CLI app targeting a habit-tracking use case. The project is in early/scaffold stage.
+This is a Dart `nocterm` TUI app for habit tracking.
 
-- `bin/habit_cli.dart` — entry point; currently wires up a `nocterm` TUI (`runApp`/`Center`/`Text` widgets)
-- `lib/habit_cli.dart` — library code imported by the entry point and tests
+- `bin/habit_cli.dart` — entry point; loads the store and calls `runApp(HabitApp(...))`
+- `lib/habit_cli.dart` — `HabitApp` root widget and global key navigation
+- `lib/models/` — `Habit` and `HabitLog` value objects
+- `lib/storage/` — `StorageService` (JSON I/O) and `HabitStore` (in-memory state)
+- `lib/screens/` — `DashboardScreen`, `LogTodayScreen`, `ManageHabitsScreen`
+- `lib/widgets/` — `HeatmapCell`, `HeatmapGrid`, `NavBar`
 - `test/habit_cli_test.dart` — unit tests using `package:test`
 
-**Key note**: `bin/habit_cli.dart` imports `package:nocterm/nocterm.dart` (a Flutter-like terminal UI framework for Dart), but `nocterm` is not yet declared in `pubspec.yaml`. Before running, add it as a dependency and run `dart pub get`.
+`nocterm` (a Flutter-like terminal UI framework) is declared in `pubspec.yaml`. The app compiles
+to a self-contained native binary via `dart compile exe` — no Dart SDK is needed at runtime.
 
 Linting follows `package:lints/recommended.yaml` (configured in `analysis_options.yaml`).
+
+## Distribution
+
+Releases are cut by pushing a `v*` tag, which triggers `.github/workflows/release.yml`. That
+workflow compiles native binaries on macOS (Apple Silicon) and Windows (x64) — Dart cannot
+cross-compile, so each runs on its own runner — and attaches archives + SHA256 sidecars to a
+GitHub Release. macOS is Apple Silicon only (no Intel build).
+
+- **Homebrew (macOS)**: tap repo `Bogghi/homebrew-habit-cli`; `brew install bogghi/habit-cli/habit-cli`
+- **winget (Windows)**: package `Bogghi.HabitCli` (portable installer type); reference manifest
+  kept under `packaging/winget/`
+
+Bump `version:` in `pubspec.yaml` and the `CHANGELOG.md` entry before tagging a new release, then
+update the Homebrew formula URLs/sha256 and the winget manifest for the new version.
