@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.6.0.schema.json
+# Installer manifest. In winget-pkgs this lives at:
+#   manifests/b/Bogghi/HabitCli/1.0.0/Bogghi.HabitCli.installer.yaml
+#
+# The release is a zip containing habit-cli.exe at its root, installed as a
+# portable (winget creates a `habit-cli` PATH alias). After each release,
+# update PackageVersion, InstallerUrl, and InstallerSha256 — the checksum is
+# published as habit-cli-windows-x64.zip.sha256 on the GitHub Release.
+PackageIdentifier: Bogghi.HabitCli
+PackageVersion: 1.0.0
+InstallerType: zip
+NestedInstallerType: portable
+NestedInstallerFiles:
+  - RelativeFilePath: habit-cli.exe
+    PortableCommandAlias: habit-cli
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/Bogghi/habit-cli/releases/download/v1.0.0/habit-cli-windows-x64.zip
+    InstallerSha256: REPLACE_WITH_WINDOWS_X64_SHA256
+ManifestType: installer
+ManifestVersion: 1.6.0

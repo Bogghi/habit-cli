@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.6.0.schema.json
+# Default-locale manifest. In winget-pkgs this lives at:
+#   manifests/b/Bogghi/HabitCli/1.0.0/Bogghi.HabitCli.locale.en-US.yaml
+PackageIdentifier: Bogghi.HabitCli
+PackageVersion: 1.0.0
+PackageLocale: en-US
+Publisher: Matteo Simone Borghi
+PublisherUrl: https://github.com/Bogghi
+PackageName: habit-cli
+PackageUrl: https://github.com/Bogghi/habit-cli
+License: MIT
+LicenseUrl: https://github.com/Bogghi/habit-cli/blob/main/LICENSE
+ShortDescription: Terminal habit tracker with GitHub-style heatmaps.
+Description: |-
+  A terminal habit tracker built with Dart. Log daily habits, visualise streaks
+  with GitHub-style heatmaps, and manage your habit list from the command line.
+  Data is stored locally; no account is required.
+Moniker: habit-cli
+Tags:
+  - cli
+  - terminal
+  - tui
+  - habit
+  - habit-tracker
+  - productivity
+ManifestType: defaultLocale
+ManifestVersion: 1.6.0

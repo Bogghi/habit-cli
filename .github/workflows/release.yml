@@ -1,0 +1,87 @@
+name: Release
+
+# Build native binaries on each platform (Dart cannot cross-compile) and publish
+# them to a GitHub Release whenever a v* tag is pushed.
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-14        # Apple Silicon
+            target: macos-arm64
+          - os: macos-13        # Intel
+            target: macos-x64
+          - os: windows-latest  # x64
+            target: windows-x64
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.11'
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Analyze
+        run: dart analyze
+
+      - name: Test
+        run: dart test
+
+      # --- Compile + package (Unix) ---
+      - name: Build and package (macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          dart compile exe bin/habit_cli.dart -o habit-cli
+          tar -czf "habit-cli-${{ matrix.target }}.tar.gz" habit-cli
+          shasum -a 256 "habit-cli-${{ matrix.target }}.tar.gz" > "habit-cli-${{ matrix.target }}.tar.gz.sha256"
+
+      # --- Compile + package (Windows) ---
+      # The .exe is placed at the archive root so the winget manifest's
+      # RelativeFilePath can reference it directly.
+      - name: Build and package (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          dart compile exe bin/habit_cli.dart -o habit-cli.exe
+          Compress-Archive -Path habit-cli.exe -DestinationPath "habit-cli-${{ matrix.target }}.zip"
+          $hash = (Get-FileHash "habit-cli-${{ matrix.target }}.zip" -Algorithm SHA256).Hash.ToLower()
+          "$hash  habit-cli-${{ matrix.target }}.zip" | Out-File -Encoding ascii "habit-cli-${{ matrix.target }}.zip.sha256"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}
+          path: |
+            habit-cli-${{ matrix.target }}.*
+          if-no-files-found: error
+
+  release:
+    name: Publish release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          fail_on_unmatched_files: true

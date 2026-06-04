@@ -9,11 +9,29 @@ A terminal habit tracker built with Dart and [nocterm](https://pub.dev/packages/
 - **Manage habits** — add and delete habits; changes persist immediately
 - **Local storage** — data saved to `%APPDATA%\habit_cli\data.json` (Windows) or `~/.habit_cli/data.json` (macOS/Linux); no account needed
 
-## Requirements
+## Install
 
-- [Dart SDK](https://dart.dev/get-dart) ≥ 3.11
+### macOS — Homebrew
 
-## Quick start
+```sh
+brew install bogghi/habit-cli/habit-cli
+```
+
+### Windows — winget
+
+```powershell
+winget install Bogghi.HabitCli
+```
+
+Both install a `habit-cli` command on your `PATH`. Run it with:
+
+```sh
+habit-cli
+```
+
+## Build from source
+
+Requires the [Dart SDK](https://dart.dev/get-dart) ≥ 3.11.
 
 ```sh
 dart pub get
@@ -23,8 +41,8 @@ dart run bin/habit_cli.dart
 Or compile to a native executable:
 
 ```sh
-dart compile exe bin/habit_cli.dart -o habit_cli
-./habit_cli
+dart compile exe bin/habit_cli.dart -o habit-cli
+./habit-cli
 ```
 
 ## Keyboard shortcuts
