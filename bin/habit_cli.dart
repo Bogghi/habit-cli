@@ -1,10 +1,9 @@
-import 'package:habit_cli/habit_cli.dart' as habit_cli;
+import 'package:habit_cli/habit_cli.dart';
+import 'package:habit_cli/storage/habit_store.dart';
+import 'package:habit_cli/storage/storage_service.dart';
 import 'package:nocterm/nocterm.dart';
 
-void main(List<String> arguments) {
-  runApp(
-    Center(
-      child: Text('Hello, Nocterm!'),
-    ),
-  );
+Future<void> main() async {
+  final store = await HabitStore.load(StorageService());
+  runApp(HabitApp(store: store));
 }
