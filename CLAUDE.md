@@ -47,9 +47,9 @@ Linting follows `package:lints/recommended.yaml` (configured in `analysis_option
 ## Distribution
 
 Releases are cut by pushing a `v*` tag, which triggers `.github/workflows/release.yml`. That
-workflow compiles native binaries on macOS (arm64 + Intel x64) and Windows (x64) — Dart cannot
+workflow compiles native binaries on macOS (Apple Silicon) and Windows (x64) — Dart cannot
 cross-compile, so each runs on its own runner — and attaches archives + SHA256 sidecars to a
-GitHub Release.
+GitHub Release. macOS is Apple Silicon only (no Intel build).
 
 - **Homebrew (macOS)**: tap repo `Bogghi/homebrew-habit-cli`; `brew install bogghi/habit-cli/habit-cli`
 - **winget (Windows)**: package `Bogghi.HabitCli` (portable installer type); reference manifest

@@ -12,10 +12,9 @@ manual follow-ups for the package managers.
    git tag vX.Y.Z
    git push origin vX.Y.Z
    ```
-3. The `Release` workflow builds on macOS (arm64 + Intel x64) and Windows (x64),
+3. The `Release` workflow builds on macOS (Apple Silicon) and Windows (x64),
    then publishes a GitHub Release with these assets and their `.sha256` sidecars:
    - `habit-cli-macos-arm64.tar.gz`
-   - `habit-cli-macos-x64.tar.gz`
    - `habit-cli-windows-x64.zip` (contains `habit-cli.exe` at the root)
 
 ## Homebrew (macOS)
@@ -25,8 +24,7 @@ lives in the tap repo `Bogghi/homebrew-habit-cli` at `Formula/habit-cli.rb`.
 
 Per release:
 1. Update `version` in the formula.
-2. Copy the two macOS hashes from the Release's `.sha256` files into the
-   `arm?` / `else` branches.
+2. Copy the macOS arm64 hash from the Release's `.sha256` file into `sha256`.
 3. Commit to the tap repo. (First time only: create the tap repo, named
    `homebrew-habit-cli`, and copy the formula into `Formula/`.)
 4. Verify:

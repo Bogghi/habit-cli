@@ -3,24 +3,23 @@
 # This is the canonical copy. To publish it, copy this file to
 # `Formula/habit-cli.rb` in the tap repo `Bogghi/homebrew-habit-cli`.
 #
-# After each release, update `version` and the two `sha256` values. The
-# checksums are published by the release workflow as
-# `habit-cli-macos-arm64.tar.gz.sha256` and `habit-cli-macos-x64.tar.gz.sha256`
-# on the GitHub Release — copy the hash from each sidecar file here.
+# After each release, update `version` and the `sha256` value. The checksum is
+# published by the release workflow as `habit-cli-macos-arm64.tar.gz.sha256` on
+# the GitHub Release — copy the hash from that sidecar file here.
+#
+# Apple Silicon only. Intel Macs are not supported (no macos-x64 build).
 class HabitCli < Formula
   desc "Terminal habit tracker with GitHub-style heatmaps"
   homepage "https://github.com/Bogghi/habit-cli"
   version "1.0.0"
   license "MIT"
 
+  depends_on arch: :arm64
+  depends_on :macos
+
   on_macos do
-    if Hardware::CPU.arm?
-      url "https://github.com/Bogghi/habit-cli/releases/download/v1.0.0/habit-cli-macos-arm64.tar.gz"
-      sha256 "REPLACE_WITH_ARM64_SHA256"
-    else
-      url "https://github.com/Bogghi/habit-cli/releases/download/v1.0.0/habit-cli-macos-x64.tar.gz"
-      sha256 "REPLACE_WITH_X64_SHA256"
-    end
+    url "https://github.com/Bogghi/habit-cli/releases/download/v1.0.0/habit-cli-macos-arm64.tar.gz"
+    sha256 "REPLACE_WITH_ARM64_SHA256"
   end
 
   def install
